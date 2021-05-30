@@ -1,6 +1,14 @@
-header {
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+$primary-color: #feeda5;
+$secondary-color: #357b70;
+%structure {
     background-color: #feeda5;
-    font-size: 12px;
     font-weight: 400;
     padding: 10px;
     margin: 10px;
@@ -8,46 +16,56 @@ header {
     height: 200px;
 }
 
+header {
+    @extend %structure;
+    font-size: 12px;
+}
+
 .page-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     width: 100%;
     padding: 20px;
 }
 
 .page-header_item {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 200px;
     flex: 0 1 200px
 }
 
 .page-header_item:last-child {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
     flex-grow: 1;
     text-align: right;
 }
 
-.navigation-list_item--active {
+navigation-list_item--active {
     text-decoration: none;
 }
 
 main {
+    @extend %structure;
     font-family: 'Assistant', sans-serif;
-    font-weight: 400;
     font-size: 16px;
     line-height: 1.6;
-    background-color: #feeda5;
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid black;
 }
 
 footer {
-    background-color: #feeda5;
+    @extend %structure;
     font-size: 12px;
-    font-weight: 400;
-    height: 125px;
+    height: 125;
 }
 
 a {
     color: #29776c;
     text-decoration: none;
+}
+
+a:visted {
+    color: #05676e;
 }
 
 a:hover {
@@ -58,15 +76,19 @@ a:active {
     color: #489c79;
 }
 
-button {
+%button {
     border: none;
     font-family: inherit;
     background-color: #357b70;
-    color: white;
     text-decoration: none;
     padding: 10px;
     border-radius: 3px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+button {
+    @extend %button;
+    color: white;
 }
 
 button:hover,
@@ -77,14 +99,11 @@ button:focus {
 
 .button,
 button {
-    border: none;
+    @extend %button;
     display: inline-block;
-    font-family: inherit;
     color: black;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 3px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    -webkit-transition: 0.2s opacity;
+    -o-transition: 0.2s opacity;
     transition: 0.2s opacity;
 }
 
@@ -109,12 +128,18 @@ button:focus,
 }
 
 * {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .page-footer {
     clear: both;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     text-align: center;
 }
@@ -129,29 +154,59 @@ button:focus,
 }
 
 .grid {
+    display: -ms-grid;
     display: grid;
-    justify-content: center;
+    -ms-grid-columns: 300px 20px 300px 20px 300px;
     grid-template-columns: 300px 300px 300px;
+    -ms-grid-rows: 300px 20px 300px;
     grid-template-rows: 300px 300px;
     grid-gap: 20px;
+}
+
+.grid>*:nth-child(1) {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+
+.grid>*:nth-child(2) {
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+}
+
+.grid>*:nth-child(3) {
+    -ms-grid-row: 1;
+    -ms-grid-column: 5;
+}
+
+.grid>*:nth-child(4) {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+}
+
+.grid>*:nth-child(5) {
+    -ms-grid-row: 3;
+    -ms-grid-column: 3;
+}
+
+.grid>*:nth-child(6) {
+    -ms-grid-row: 3;
+    -ms-grid-column: 5;
 }
 
 .grid-item {
     background-color: lightgrey;
 }
 
-:root {
-    background-color: #29776c;
-}
-
 @media all and (max-width: 500px) {
     .grid {
+        -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     }
 }
 
 @media all and (min-width:500px) and (max-width:750px) {
     .grid {
+        -ms-grid-columns: 1fr 20px 1fr;
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -169,12 +224,8 @@ button:focus,
     }
 }
 
-.main-navigation.page-header_item li {
-    position: relative;
-}
-
-.main-navigation.page-header_item a:before,
-.main-navigation.page-header_item a:after {
+nav ul li a:before,
+nav ul li a:after {
     position: absolute;
     left: 0px;
     width: 100%;
@@ -182,87 +233,26 @@ button:focus,
     background: black;
     content: "";
     opacity: 0;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
     transition: all 0.3s;
+    -webkit-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
 }
 
-.main-navigation.page-header_item a:before {
+nav ul li a:before {
     top: 0px;
-    transform: translateY(10px);
 }
 
-.main-navigation.page-header_item a:after {
+nav.main-navigation a:after {
     bottom: 0px;
-    transform: translateY(-10px);
 }
 
-.main-navigation.page-header_item a:hover:before,
-.main-navigation.page-header_item a:hover:after {
+nav ul li a:hover:before,
+nav ul li a:hover:after {
     opacity: 1;
-    transform: translateY(0px);
-}
-
-responsive.img {
-    background-color: inherit;
-}
-
-.sun {
-    animation-duration: 4s;
-    animation-name: color-change;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: linear;
-}
-
-.cloud-front {
-    animation-duration: 30s;
-    animation-name: cloud-move;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: linear;
-}
-
-.berlin-illustration {
-    margin: 0 auto;
-    display: block;
-}
-
-@keyframes cloud-move-reverse {
-    from {
-        transform: translate(446px, 48px);
-    }
-    to {
-        transform: translate(100px, 48px);
-    }
-}
-
-@keyframes color-change {
-    0% {
-        fill: #edc655;
-    }
-    50% {
-        fill: #fcffad;
-    }
-    100% {
-        fill: #f76414;
-    }
-}
-
-@keyframes cloud-move {
-    from {
-        transform: translate(0, 50px);
-    }
-    to {
-        transform: translate(200px, 50px);
-    }
-}
-
-#delay {
-    font-size: 12px;
-    transition-property: font-size;
-    transition-duration: 4s;
-    transition-delay: 1s;
-}
-
-#delay:hover {
-    font-size: 30px;
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1);
 }
