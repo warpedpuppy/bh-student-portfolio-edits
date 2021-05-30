@@ -221,6 +221,11 @@ responsive.img {
     animation-timing-function: linear;
 }
 
+.berlin-illustration {
+    margin: 0 auto;
+    display: block;
+}
+
 @keyframes cloud-move-reverse {
     from {
         transform: translate(446px, 48px);
